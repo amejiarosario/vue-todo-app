@@ -1,4 +1,10 @@
 const app = new Vue({
-  el: 'todo-app',
-  template: `<h1>TODO App</h1>`
+  el: '.todoapp',
+  data: {
+    todos: [
+      { text: 'Learn JavaScript ES6+ goodies' },
+      { text: 'Learn Vue' },
+      { text: 'Build something awesome' },
+    ]
+  }
 })
