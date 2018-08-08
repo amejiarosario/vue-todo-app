@@ -1,0 +1,17 @@
+{
+  "name": "todo-vue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "serve": "npx live-server"
+  },
+  "author": "Adrian Mejia <me@adrianmejia.com> (http://adrianmejia.com)",
+  "license": "ISC",
+  "dependencies": {
+    "todomvc-app-css": "2.1.2"
+  },
+  "devDependencies": {
+    "live-server": "1.2.0"
+  }
+}
