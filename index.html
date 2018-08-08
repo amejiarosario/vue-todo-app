@@ -25,7 +25,7 @@
           <div class="view">
             <input class="toggle" type="checkbox" v-model="todo.isDone">
             <label>{{todo.text}}</label>
-            <button class="destroy"></button>
+            <button class="destroy" @click="destroy(todo)"></button>
           </div>
           <input class="edit" value="Create a TodoMVC template">
         </li>

@@ -6,5 +6,11 @@ const app = new Vue({
       { text: 'Learn Vue', isDone: false },
       { text: 'Build something awesome', isDone: false },
     ]
+  },
+  methods: {
+    destroy (todo) {
+      const index = this.todos.indexOf(todo);
+      this.todos.splice(index, 1);
+    }
   }
 })
