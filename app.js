@@ -1,4 +1,4 @@
-const app = new Vue({
+const todoApp = new Vue({
   el: '.todoapp',
   data: {
     todos: [
@@ -30,6 +30,11 @@ const app = new Vue({
         this.todos.push({ text: this.newTodo, isDone: false });
         this.newTodo = null;
       }
+    }
+  },
+  computed: {
+    itemsLeft() {
+      return this.todos.filter(t => !t.isDone).length;
     }
   }
 })
