@@ -13,8 +13,11 @@
 
   <section class="todoapp">
     <header class="header">
-      <h1>todos</h1>
-      <input class="new-todo" placeholder="What needs to be done?" autofocus>
+      <h1>Todos</h1>
+      <input class="new-todo" placeholder="What needs to be done?"
+        v-model.trim="newTodo"
+        @keyup.enter="createTodo"
+        autofocus>
     </header>
 
     <!-- This section should be hidden by default and shown when there are todos -->
@@ -23,11 +26,13 @@
 
         <li v-for="todo in todos"
             :class="{completed: todo.isDone, editing: todo === editingTodo}">
+
           <div class="view">
             <input class="toggle" type="checkbox" v-model="todo.isDone">
             <label @dblclick="startEditing(todo)">{{todo.text}}</label>
             <button class="destroy" @click="destroy(todo)"></button>
           </div>
+
           <input class="edit"
             @keyup.escape="cancelEditing(todo)"
             @keyup.enter="finishEditing(todo)"

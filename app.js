@@ -6,7 +6,8 @@ const app = new Vue({
       { text: 'Learn Vue', isDone: false },
       { text: 'Build something awesome', isDone: false },
     ],
-    editingTodo: null
+    editingTodo: null,
+    newTodo: null,
   },
   methods: {
     destroy (todo) {
@@ -24,5 +25,11 @@ const app = new Vue({
       this.editingTodo = null;
       todo.text = this.beforeText;
     },
+    createTodo() {
+      if (this.newTodo.length) {
+        this.todos.push({ text: this.newTodo, isDone: false });
+        this.newTodo = null;
+      }
+    }
   }
 })
