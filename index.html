@@ -21,13 +21,18 @@
     <section class="main">
       <ul class="todo-list">
 
-        <li v-for="todo in todos" :class="{completed: todo.isDone}">
+        <li v-for="todo in todos"
+            :class="{completed: todo.isDone, editing: todo === editingTodo}">
           <div class="view">
             <input class="toggle" type="checkbox" v-model="todo.isDone">
-            <label>{{todo.text}}</label>
+            <label @dblclick="startEditing(todo)">{{todo.text}}</label>
             <button class="destroy" @click="destroy(todo)"></button>
           </div>
-          <input class="edit" value="Create a TodoMVC template">
+          <input class="edit"
+            @keyup.escape="cancelEditing(todo)"
+            @keyup.enter="finishEditing(todo)"
+            @blur="finishEditing(todo)"
+            v-model.trim="todo.text">
         </li>
 
       </ul>
