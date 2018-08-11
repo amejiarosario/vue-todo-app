@@ -1,13 +1,14 @@
-const todoApp = new Vue({
-  el: '.todoapp',
-  data: {
-    todos: [
-      { text: 'Learn JavaScript ES6+ goodies', isDone: true },
-      { text: 'Learn Vue', isDone: false },
-      { text: 'Build something awesome', isDone: false },
-    ],
-    editingTodo: null,
-    newTodo: null,
+const todoComponent = Vue.component('todo-app', {
+  data() {
+    return {
+      todos: [
+        { text: 'Learn JavaScript ES6+ goodies', isDone: true },
+        { text: 'Learn Vue', isDone: false },
+        { text: 'Build something awesome', isDone: false },
+      ],
+      editingTodo: null,
+      newTodo: null,
+    }
   },
   methods: {
     destroy (todo) {
@@ -36,5 +37,70 @@ const todoApp = new Vue({
     itemsLeft() {
       return this.todos.filter(t => !t.isDone).length;
     }
-  }
+  },
+  template: `
+<div>
+  <section class="todoapp">
+    <header class="header">
+      <h1>Todos</h1>
+      <input class="new-todo" placeholder="What needs to be done?"
+        v-model.trim="newTodo"
+        @keyup.enter="createTodo"
+        autofocus>
+    </header>
+
+    <!-- This section should be hidden by default and shown when there are todos -->
+    <section class="main">
+      <ul class="todo-list">
+
+        <li v-for="todo in todos"
+            :class="{completed: todo.isDone, editing: todo === editingTodo}">
+
+          <div class="view">
+            <input class="toggle" type="checkbox" v-model="todo.isDone">
+            <label @dblclick="startEditing(todo)">{{todo.text}}</label>
+            <button class="destroy" @click="destroy(todo)"></button>
+          </div>
+
+          <input class="edit"
+            @keyup.escape="cancelEditing(todo)"
+            @keyup.enter="finishEditing(todo)"
+            @blur="finishEditing(todo)"
+            v-model.trim="todo.text">
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- This footer should hidden by default and shown when there are todos -->
+    <footer class="footer">
+      <span class="todo-count">
+        <strong>{{itemsLeft}}</strong> item(s) left</span>
+
+      <!-- Remove this if you don't implement routing -->
+      <ul class="filters">
+        <li>
+          <a class="selected" href="#/">All</a>
+        </li>
+        <li>
+          <a href="#/active">Active</a>
+        </li>
+        <li>
+          <a href="#/completed">Completed</a>
+        </li>
+      </ul>
+
+      <!-- Hidden if no completed items are left ↓ -->
+      <button class="clear-completed">Clear completed</button>
+    </footer>
+  </section>
+
+  <footer class="info">
+    <p>Double-click to edit a todo</p>
+  </footer>
+</div>`
+});
+
+const app = new Vue({
+  el: '#app'
 })

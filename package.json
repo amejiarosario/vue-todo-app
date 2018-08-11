@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "serve": "npx live-server"
+    "serve": "npx live-server",
+    "start": "npm run serve"
   },
   "author": "Adrian Mejia <me@adrianmejia.com> (http://adrianmejia.com)",
   "license": "ISC",
