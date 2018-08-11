@@ -31,6 +31,9 @@ const todoComponent = Vue.component('todo-app', {
         this.todos.push({ text: this.newTodo, isDone: false });
         this.newTodo = null;
       }
+    },
+    clearCompleted() {
+      this.todos = this.todos.filter(t => !t.isDone);
     }
   },
   computed: {
@@ -105,7 +108,7 @@ const todoComponent = Vue.component('todo-app', {
       </ul>
 
       <!-- Hidden if no completed items are left ↓ -->
-      <button class="clear-completed">Clear completed</button>
+      <button class="clear-completed" @click="clearCompleted">Clear completed</button>
     </footer>
   </section>
 
