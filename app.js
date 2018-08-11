@@ -112,13 +112,13 @@ const todoComponent = Vue.component('todo-app', {
           <!-- Remove this if you don't implement routing -->
           <ul class="filters">
             <li>
-              <a :class="{ selected: status === 'all' }" href="#/">All</a>
+              <router-link to="/all" :class="{ selected: status === 'all' }">All</router-link>
             </li>
             <li>
-              <a href="#/active" :class="{ selected: status === 'active' }">Active</a>
+              <router-link to="/active" :class="{ selected: status === 'active' }">Active</router-link>
             </li>
             <li>
-              <a href="#/completed" :class="{ selected: status === 'completed' }">Completed</a>
+              <router-link to="/completed" :class="{ selected: status === 'completed' }">Completed</router-link>
             </li>
           </ul>
 
@@ -136,6 +136,7 @@ const todoComponent = Vue.component('todo-app', {
 });
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [
     { path: '/:status', component: { template: `<todo-app></todo-app>`} },
     { path: '*', redirect: '/all' },
