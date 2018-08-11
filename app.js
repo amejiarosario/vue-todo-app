@@ -101,6 +101,12 @@ const todoComponent = Vue.component('todo-app', {
 </div>`
 });
 
-const app = new Vue({
-  el: '#app'
+const router = new VueRouter({
+  routes: [
+    { path: '*', component: { template: `<todo-app></todo-app>`} }
+  ]
 })
+
+const app = new Vue({
+  router
+}).$mount('#app')
