@@ -1,7 +1,8 @@
+const LOCAL_STORAGE_KEY = 'todo-app-vue';
 const todoComponent = Vue.component('todo-app', {
   data() {
     return {
-      todos: [
+      todos: JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [
         { text: 'Learn JavaScript ES6+ goodies', isDone: true },
         { text: 'Learn Vue', isDone: false },
         { text: 'Build something awesome', isDone: false },
@@ -61,67 +62,77 @@ const todoComponent = Vue.component('todo-app', {
       }
     }
   },
+  watch: {
+    todos: {
+      deep: true,
+      handler(newValue) {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newValue));
+      }
+    }
+  },
   template: `
-<div>
-  <section class="todoapp">
-    <header class="header">
-      <h1>Todos</h1>
-      <input class="new-todo" placeholder="What needs to be done?"
-        v-model.trim="newTodo"
-        @keyup.enter="createTodo"
-        autofocus>
-    </header>
+    <div>
+      <section class="todoapp">
+        <header class="header">
+          <h1>Todos</h1>
+          <input class="new-todo" placeholder="What needs to be done?"
+            v-model.trim="newTodo"
+            @keyup.enter="createTodo"
+            autofocus>
+        </header>
 
-    <!-- This section should be hidden by default and shown when there are todos -->
-    <section class="main">
-      <ul class="todo-list">
+        <!-- This section should be hidden by default and shown when there are todos -->
+        <section class="main">
+          <ul class="todo-list">
 
-        <li v-for="todo in filteredTodos"
-            :class="{completed: todo.isDone, editing: todo === editingTodo}">
+            <li v-for="todo in filteredTodos"
+                :class="{completed: todo.isDone, editing: todo === editingTodo}">
 
-          <div class="view">
-            <input class="toggle" type="checkbox" v-model="todo.isDone">
-            <label @dblclick="startEditing(todo)">{{todo.text}}</label>
-            <button class="destroy" @click="destroy(todo)"></button>
-          </div>
+              <div class="view">
+                <input class="toggle" type="checkbox" v-model="todo.isDone">
+                <label @dblclick="startEditing(todo)">{{todo.text}}</label>
+                <button class="destroy" @click="destroy(todo)"></button>
+              </div>
 
-          <input class="edit"
-            @keyup.escape="cancelEditing(todo)"
-            @keyup.enter="finishEditing(todo)"
-            @blur="finishEditing(todo)"
-            v-model.trim="todo.text">
-        </li>
+              <input class="edit"
+                @keyup.escape="cancelEditing(todo)"
+                @keyup.enter="finishEditing(todo)"
+                @blur="finishEditing(todo)"
+                v-model.trim="todo.text">
+            </li>
 
-      </ul>
-    </section>
+          </ul>
+        </section>
 
-    <!-- This footer should hidden by default and shown when there are todos -->
-    <footer class="footer">
-      <span class="todo-count">
-        <strong>{{itemsLeft}}</strong> item(s) left</span>
+        <!-- This footer should hidden by default and shown when there are todos -->
+        <footer class="footer">
+          <span class="todo-count">
+            <strong>{{itemsLeft}}</strong> item(s) left</span>
 
-      <!-- Remove this if you don't implement routing -->
-      <ul class="filters">
-        <li>
-          <a :class="{ selected: status === 'all' }" href="#/">All</a>
-        </li>
-        <li>
-          <a href="#/active" :class="{ selected: status === 'active' }">Active</a>
-        </li>
-        <li>
-          <a href="#/completed" :class="{ selected: status === 'completed' }">Completed</a>
-        </li>
-      </ul>
+          <!-- Remove this if you don't implement routing -->
+          <ul class="filters">
+            <li>
+              <a :class="{ selected: status === 'all' }" href="#/">All</a>
+            </li>
+            <li>
+              <a href="#/active" :class="{ selected: status === 'active' }">Active</a>
+            </li>
+            <li>
+              <a href="#/completed" :class="{ selected: status === 'completed' }">Completed</a>
+            </li>
+          </ul>
 
-      <!-- Hidden if no completed items are left ↓ -->
-      <button class="clear-completed" @click="clearCompleted">Clear completed</button>
-    </footer>
-  </section>
+          <!-- Hidden if no completed items are left ↓ -->
+          <button class="clear-completed" @click="clearCompleted">Clear completed</button>
+        </footer>
+      </section>
 
-  <footer class="info">
-    <p>Double-click to edit a todo</p>
-  </footer>
-</div>`
+      <footer class="info">
+        <p>Double-click to edit a todo</p>
+        <p>Esc to cancel edit</p>
+        <p>Enter to accept edit</p>
+      </footer>
+    </div>`,
 });
 
 const router = new VueRouter({
@@ -129,7 +140,7 @@ const router = new VueRouter({
     { path: '/:status', component: { template: `<todo-app></todo-app>`} },
     { path: '*', redirect: '/all' },
   ]
-})
+});
 
 const app = new Vue({
   router
