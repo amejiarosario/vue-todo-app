@@ -36,6 +36,20 @@ const todoComponent = Vue.component('todo-app', {
   computed: {
     itemsLeft() {
       return this.todos.filter(t => !t.isDone).length;
+    },
+    status() {
+      return this.$route.params.status;
+    },
+    filteredTodos () {
+      switch (this.status) {
+        case 'active':
+          return this.todos.filter(t => !t.isDone);
+        case 'completed':
+          return this.todos.filter(t => t.isDone);
+
+        default:
+          return this.todos;
+      }
     }
   },
   template: `
@@ -53,7 +67,7 @@ const todoComponent = Vue.component('todo-app', {
     <section class="main">
       <ul class="todo-list">
 
-        <li v-for="todo in todos"
+        <li v-for="todo in filteredTodos"
             :class="{completed: todo.isDone, editing: todo === editingTodo}">
 
           <div class="view">
@@ -80,13 +94,13 @@ const todoComponent = Vue.component('todo-app', {
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
         <li>
-          <a class="selected" href="#/">All</a>
+          <a :class="{ selected: status === 'all' }" href="#/">All</a>
         </li>
         <li>
-          <a href="#/active">Active</a>
+          <a href="#/active" :class="{ selected: status === 'active' }">Active</a>
         </li>
         <li>
-          <a href="#/completed">Completed</a>
+          <a href="#/completed" :class="{ selected: status === 'completed' }">Completed</a>
         </li>
       </ul>
 
