@@ -103,7 +103,8 @@ const todoComponent = Vue.component('todo-app', {
 
 const router = new VueRouter({
   routes: [
-    { path: '*', component: { template: `<todo-app></todo-app>`} }
+    { path: '/:status', component: { template: `<todo-app></todo-app>`} },
+    { path: '*', redirect: '/all' },
   ]
 })
 
