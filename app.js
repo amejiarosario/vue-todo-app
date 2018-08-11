@@ -33,7 +33,7 @@ const todoComponent = Vue.component('todo-app', {
       }
     },
     clearCompleted() {
-      this.todos = this.todos.filter(t => !t.isDone);
+      this.todos = this.activeTodos;
     }
   },
   computed: {
@@ -43,12 +43,18 @@ const todoComponent = Vue.component('todo-app', {
     status() {
       return this.$route.params.status;
     },
+    activeTodos() {
+      return this.todos.filter(t => !t.isDone);
+    },
+    completedTodos() {
+      return this.todos.filter(t => t.isDone);
+    },
     filteredTodos () {
       switch (this.status) {
         case 'active':
-          return this.todos.filter(t => !t.isDone);
+          return this.activeTodos;
         case 'completed':
-          return this.todos.filter(t => t.isDone);
+          return this.completedTodos;
 
         default:
           return this.todos;
