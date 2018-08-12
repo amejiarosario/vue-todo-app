@@ -4,12 +4,15 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "serve": "npx live-server"
+    "serve": "npx live-server --entry-file=index.html",
+    "start": "npm run serve"
   },
   "author": "Adrian Mejia <me@adrianmejia.com> (http://adrianmejia.com)",
   "license": "ISC",
   "dependencies": {
-    "todomvc-app-css": "2.1.2"
+    "todomvc-app-css": "2.1.2",
+    "vue": "2.5.17",
+    "vue-router": "3.0.1"
   },
   "devDependencies": {
     "live-server": "1.2.0"
