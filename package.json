@@ -2,7 +2,7 @@
   "name": "todo-vue",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.html",
   "scripts": {
     "serve": "npx live-server --entry-file=index.html",
     "start": "npm run serve"
