@@ -7,5 +7,12 @@ const todoApp = new Vue({
       { text: 'Learn Vue', isDone: false },
       { text: 'Build something awesome', isDone: false },
     ],
+  },
+  methods: {
+    createTodo(event) {
+      const textbox = event.target;
+      this.todos.push({ text: textbox.value, isDone: false });
+      textbox.value = '';
+    }
   }
 });
