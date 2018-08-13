@@ -31,5 +31,10 @@ const todoApp = new Vue({
       const index = this.todos.indexOf(todo);
       this.todos.splice(index, 1);
     },
+  },
+  computed: {
+    activeTodos() {
+      return this.todos.filter(t => !t.isDone);
+    }
   }
 });
