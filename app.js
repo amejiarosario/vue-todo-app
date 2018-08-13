@@ -7,12 +7,25 @@ const todoApp = new Vue({
       { text: 'Learn Vue', isDone: false },
       { text: 'Build something awesome', isDone: false },
     ],
+    editing: null,
   },
   methods: {
     createTodo(event) {
       const textbox = event.target;
       this.todos.push({ text: textbox.value, isDone: false });
       textbox.value = '';
-    }
+    },
+    startEditing(todo) {
+      this.editing = todo;
+    },
+    finishEditing(event) {
+      if (!this.editing) { return; }
+      const textbox = event.target;
+      this.editing.text = textbox.value;
+      this.editing = null;
+    },
+    cancelEditing() {
+      this.editing = null;
+    },
   }
 });

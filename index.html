@@ -23,15 +23,18 @@
     <section class="main">
 
       <ul class="todo-list">
-        <!-- These are here just to show the structure of the list items -->
-        <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-        <li v-for="todo in todos" :class="{ completed: todo.isDone }">
+        <li v-for="todo in todos" :class="{ completed: todo.isDone, editing: todo === editing }">
           <div class="view">
             <input class="toggle" type="checkbox" v-model="todo.isDone">
-            <label>{{todo.text}}</label>
+            <label @dblclick="startEditing(todo)">{{todo.text}}</label>
             <button class="destroy"></button>
           </div>
-          <input class="edit" value="Rule the web">
+
+          <input class="edit"
+            @keyup.esc="cancelEditing"
+            @keyup.enter="finishEditing"
+            @blur="finishEditing"
+            :value="todo.text">
         </li>
       </ul>
     </section>
