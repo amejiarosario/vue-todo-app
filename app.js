@@ -12,7 +12,7 @@ const todoApp = new Vue({
   methods: {
     createTodo(event) {
       const textbox = event.target;
-      this.todos.push({ text: textbox.value, isDone: false });
+      this.todos.push({ text: textbox.value.trim(), isDone: false });
       textbox.value = '';
     },
     startEditing(todo) {
@@ -21,7 +21,7 @@ const todoApp = new Vue({
     finishEditing(event) {
       if (!this.editing) { return; }
       const textbox = event.target;
-      this.editing.text = textbox.value;
+      this.editing.text = textbox.value.trim();
       this.editing = null;
     },
     cancelEditing() {
